@@ -76,12 +76,7 @@ public class BeerDetails extends AppCompatActivity {
             Drawable drawable = this.getResources().getDrawable(resourceId);
             imageView.setLayoutParams(new ActionBar.LayoutParams(120,120));
             imageView.setImageDrawable(drawable);
-            LinearLayout horizontalLayout = new LinearLayout(this);
-            horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
-            horizontalLayout.addView(imageView);
-            horizontalLayout.addView(Utility.addNameTextView("Malts: ",this));
-            horizontalLayout.setPadding(0,0,0,16);
-            listLayoutContainer.addView(horizontalLayout);
+            listLayoutContainer.addView(Utility.createHorizontalLayout("Malts: ",imageView, this));
             listLayoutContainer.addView(listView);
             AdapterIngredients adapter = new AdapterIngredients(this, beer.getIngredients().getMalt());
             listView.setAdapter(adapter);
@@ -96,12 +91,7 @@ public class BeerDetails extends AppCompatActivity {
             Drawable drawable = this.getResources().getDrawable(resourceId);
             imageView.setLayoutParams(new ActionBar.LayoutParams(120,120));
             imageView.setImageDrawable(drawable);
-            LinearLayout horizontalLayout = new LinearLayout(this);
-            horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
-            horizontalLayout.addView(imageView);
-            horizontalLayout.addView(Utility.addNameTextView("Malts: ",this));
-            horizontalLayout.setPadding(0,0,0,16);
-            listLayoutContainer.addView(horizontalLayout);
+            listLayoutContainer.addView(Utility.createHorizontalLayout("Hops: ",imageView, this));
             listLayoutContainer.addView(listView2);
             AdapterIngredients adapter2 = new AdapterIngredients(this, beer.getIngredients().getHops());
             listView2.setAdapter(adapter2);

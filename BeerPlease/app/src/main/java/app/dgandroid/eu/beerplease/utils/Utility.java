@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -72,6 +73,15 @@ public class Utility {
         } else {
             return false;
         }
+    }
+
+    public static LinearLayout createHorizontalLayout(String title, ImageView imageView, Context context){
+        LinearLayout horizontalLayout = new LinearLayout(context);
+        horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
+        horizontalLayout.addView(imageView);
+        horizontalLayout.addView(Utility.addNameTextView(title,context));
+        horizontalLayout.setPadding(0,0,0,16);
+        return horizontalLayout;
     }
 
     public static TextView addNameTextView(String title, Context context) {
