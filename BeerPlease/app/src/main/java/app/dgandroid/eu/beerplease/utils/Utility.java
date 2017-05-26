@@ -2,6 +2,8 @@ package app.dgandroid.eu.beerplease.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.ActionBar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -62,7 +64,7 @@ public class Utility {
                     (numberOfItems - 1);
             // Set list height.
             ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalItemsHeight + totalDividersHeight + 125;
+            params.height = totalItemsHeight + totalDividersHeight + 32; //+ 125
             listView.setLayoutParams(params);
             listView.requestLayout();
             listView.setDivider(null);
@@ -72,18 +74,13 @@ public class Utility {
         }
     }
 
-    public static void addHeaderView(ListView listView, String title, Context context) {
+    public static TextView addNameTextView(String title, Context context) {
         TextView textView = new TextView(context);
         textView.setText(title);
-        addPaddingTopAndBottom(textView, context, 8);
-        //textView.setTypeface(null, Typeface.BOLD);
+        textView.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        textView.setPadding(16,0,0,0);
+        textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setTextSize(14);
-        listView.addHeaderView(textView);
-    }
-
-    public static void addPaddingTopAndBottom(View view, Context context, int padding){
-        float density = context.getResources().getDisplayMetrics().density;
-        int paddingDp = (int)(padding * density);
-        view.setPadding(0,paddingDp,0,paddingDp);
+        return textView;
     }
 }

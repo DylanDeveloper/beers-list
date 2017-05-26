@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -77,13 +76,17 @@ public class BeerDetails extends AppCompatActivity {
             Drawable drawable = this.getResources().getDrawable(resourceId);
             imageView.setLayoutParams(new ActionBar.LayoutParams(120,120));
             imageView.setImageDrawable(drawable);
-            listLayoutContainer.addView(imageView);
+            LinearLayout horizontalLayout = new LinearLayout(this);
+            horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
+            horizontalLayout.addView(imageView);
+            horizontalLayout.addView(Utility.addNameTextView("Malts: ",this));
+            horizontalLayout.setPadding(0,0,0,16);
+            listLayoutContainer.addView(horizontalLayout);
             listLayoutContainer.addView(listView);
             AdapterIngredients adapter = new AdapterIngredients(this, beer.getIngredients().getMalt());
             listView.setAdapter(adapter);
             listView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
             Utility.setListViewHeightBasedOnItems(listView);
-            Utility.addHeaderView(listView, "Malts: ", this);
         }
 
         if(beer.getIngredients().getHops().size() != 0){
@@ -93,13 +96,17 @@ public class BeerDetails extends AppCompatActivity {
             Drawable drawable = this.getResources().getDrawable(resourceId);
             imageView.setLayoutParams(new ActionBar.LayoutParams(120,120));
             imageView.setImageDrawable(drawable);
-            listLayoutContainer.addView(imageView);
+            LinearLayout horizontalLayout = new LinearLayout(this);
+            horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
+            horizontalLayout.addView(imageView);
+            horizontalLayout.addView(Utility.addNameTextView("Malts: ",this));
+            horizontalLayout.setPadding(0,0,0,16);
+            listLayoutContainer.addView(horizontalLayout);
             listLayoutContainer.addView(listView2);
             AdapterIngredients adapter2 = new AdapterIngredients(this, beer.getIngredients().getHops());
             listView2.setAdapter(adapter2);
             listView2.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
             Utility.setListViewHeightBasedOnItems(listView2);
-            Utility.addHeaderView(listView2, "Hops: ", this);
         }
 
         scrollView.post(new Runnable()
