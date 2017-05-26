@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:padding="8dp"
+    tools:context="app.dgandroid.eu.beerplease.activities.FullscreenBeerActivity">
+
+    <app.dgandroid.eu.beerplease.customs.TouchImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/default_beer" />
+
+    <ImageButton
+        android:id="@+id/closeBTN"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="8dp"
+        android:background="@android:color/transparent"
+        android:tint="@android:color/white"
+        app:srcCompat="@drawable/ic_clear_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
+</FrameLayout>
