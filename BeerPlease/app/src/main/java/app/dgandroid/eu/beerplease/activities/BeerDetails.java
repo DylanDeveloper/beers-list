@@ -3,6 +3,8 @@ package app.dgandroid.eu.beerplease.activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import app.dgandroid.eu.beerplease.adapters.AdapterIngredients;
 import app.dgandroid.eu.beerplease.model.Beer;
@@ -25,12 +26,11 @@ public class BeerDetails extends AppCompatActivity {
 
     private Intent intentExtra;
     private Beer beer;
-    private TextView tag, description, contributorsName, dateOfBrew, nameBeer;
+    private TextView tag, description, contributorsName, dateOfBrew;
     private ImageView image;
     private LinearLayout listLayoutContainer;
-    private ScrollView scrollView;
     private ImageButton backButton;
-    //The beer description screen includes: name, tags, description, image, contributor's name and date of brew, ingredients.
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,34 +40,26 @@ public class BeerDetails extends AppCompatActivity {
         final ActionBar ab =getSupportActionBar();
         ab.hide();
 
+        CollapsingToolbarLayout collapsing_container = (CollapsingToolbarLayout) findViewById(R.id.collapsing_container);
+
         listLayoutContainer = (LinearLayout) findViewById(R.id.listLayoutContainer);
-        scrollView          = (ScrollView) findViewById(R.id.scrollView);
         backButton          = (ImageButton) findViewById(R.id.backButton);
-        nameBeer            =  (TextView) findViewById(R.id.nameBeer);
         tag                 = (TextView) findViewById(R.id.tag);
         description         = (TextView) findViewById(R.id.description);
         contributorsName    = (TextView) findViewById(R.id.contributorsName);
         dateOfBrew          = (TextView) findViewById(R.id.dateOfBrew);
-        image               = (ImageView) findViewById(R.id.image);
+        image               = (ImageView) findViewById(R.id.imgBeer);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fabImage);
 
         intentExtra = getIntent();
         this.beer = (Beer) intentExtra.getSerializableExtra(Constants.SHARE_BEERS);
 
-        nameBeer.setText(beer.getName());
+        collapsing_container.setTitle(beer.getName());
         tag.setText(beer.getTag());
         description.setText(beer.getDescription());
         contributorsName.setText(beer.getContributorsName());
         dateOfBrew.setText(beer.getDateOfBrew());
         Utility.onGettingImage(this, beer.getImage(), image);
-
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BeerDetails.this, FullscreenBeerActivity.class);
-                intent.putExtra(Constants.SHARE_IMAGE,beer.getImage());
-                startActivity(intent);
-            }
-        });
 
         if(beer.getIngredients().getMalt().size() != 0){
             ListView listView = new ListView(this);
@@ -99,20 +91,21 @@ public class BeerDetails extends AppCompatActivity {
             Utility.setListViewHeightBasedOnItems(listView2);
         }
 
-        scrollView.post(new Runnable()
-        {
-            public void run() {
-                scrollView.fullScroll(ScrollView.FOCUS_UP);
-            }
-        });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BeerDetails.this, FullscreenBeerActivity.class);
+                intent.putExtra(Constants.SHARE_IMAGE, beer.getImage());
+                startActivity(intent);
+            }
+        });
     }
-
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
