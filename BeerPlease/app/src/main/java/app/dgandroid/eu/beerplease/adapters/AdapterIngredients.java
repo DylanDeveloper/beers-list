@@ -35,9 +35,7 @@ public class AdapterIngredients extends ArrayAdapter<Ingredients.IngredientType>
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.item);
-        //TextView value = (TextView) convertView.findViewById(R.id.value);
         name.setText(IngredientType.getName()+": " + IngredientType.getAmount().getValue() + " " + IngredientType.getAmount().getUnit());
-        //value.setText("amount: " + IngredientType.getAmount().getValue() + " " + IngredientType.getAmount().getUnit());
         return convertView;
     }
 }

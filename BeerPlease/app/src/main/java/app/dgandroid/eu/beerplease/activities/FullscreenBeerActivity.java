@@ -3,6 +3,7 @@ package app.dgandroid.eu.beerplease.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.view.View;
 import android.widget.ImageButton;
 import app.dgandroid.eu.beerplease.customs.TouchImageView;
@@ -19,6 +20,8 @@ public class FullscreenBeerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setEnterTransition(new Explode());
+        getWindow().setExitTransition(new Explode());
         setContentView(R.layout.activity_fullscreenbeer);
         getSupportActionBar().hide();
 

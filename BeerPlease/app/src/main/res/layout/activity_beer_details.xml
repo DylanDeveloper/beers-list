@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/pub"
-                app:layout_collapseMode="parallax"></ImageView>
+                app:layout_collapseMode="parallax"/>
 
             <ImageView
                 android:id="@+id/imgBeer"
@@ -34,6 +34,7 @@
                 android:layout_height="match_parent"
                 android:padding="16dp"
                 android:src="@drawable/default_beer"
+                android:transitionName="@string/transition_string"
                 android:background="@drawable/rectangle"
                 app:layout_collapseMode="parallax"/>
 
@@ -52,7 +53,7 @@
                     android:background="@android:color/transparent"
                     android:paddingRight="16dp"
                     android:tint="@android:color/white"
-                    app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
             </android.support.v7.widget.Toolbar>
 
 

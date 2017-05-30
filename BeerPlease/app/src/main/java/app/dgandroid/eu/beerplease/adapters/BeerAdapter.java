@@ -1,18 +1,19 @@
 package app.dgandroid.eu.beerplease.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import java.util.List;
 import app.dgandroid.eu.beerplease.R;
 import app.dgandroid.eu.beerplease.activities.BeerDetails;
@@ -28,6 +29,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.BeerViewHolder
     private List<Beer> beerList;
     private int rowLayout;
     private Context context;
+    private Activity activity;
 
     @Override
     public BeerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,7 +46,10 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.BeerViewHolder
                 Intent intent = new Intent(context, BeerDetails.class);
                 Beer beer = beerList.get(position);
                 intent.putExtra(Constants.SHARE_BEERS, beer);
-                context.startActivity(intent);
+                Pair<View, String> pair1 = Pair.create((View) holder.icon, holder.icon.getTransitionName());
+                ActivityOptions activityOptions = ActivityOptions
+                            .makeSceneTransitionAnimation(activity, pair1.first, pair1.second);
+                activity.startActivity(intent, activityOptions.toBundle());
             }
         });
     }
@@ -54,6 +59,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.BeerViewHolder
         holder.name.setText(beerList.get(position).getName());
         holder.tag.setText(beerList.get(position).getName());
         setIconFromURL(beerList.get(position).getImage(), context, holder.icon);
+        holder.icon.setTransitionName(context.getString(R.string.transition_string) + position);
     }
 
     @Override
@@ -74,31 +80,35 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.BeerViewHolder
         }
     }
 
-    public BeerAdapter(List<Beer> beerList, int rowLayout, Context context) {
+    public BeerAdapter(List<Beer> beerList, int rowLayout, Activity activity) {
         this.beerList   = beerList;
         this.rowLayout  = rowLayout;
-        this.context    = context;
+        this.activity   = activity;
+        this.context    = activity.getApplicationContext();
     }
 
     public void setIconFromURL(final String urlImage, final Context context, final ImageView imageView) {
         Picasso.with(context)
                 .load(urlImage)
-                .into(new Target() {
+                .into(imageView, new Callback() {
                     @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        imageView.setImageBitmap(bitmap);
+                    public void onSuccess() {
+                        scheduleStartPostponedTransition(imageView);
                     }
 
                     @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                        imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(),
-                                R.drawable.default_beer));
+                    public void onError() {
                     }
-
+                });
+    }
+    private void scheduleStartPostponedTransition(final View sharedElement) {
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
                     @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                        imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(),
-                                R.drawable.default_beer));
+                    public boolean onPreDraw() {
+                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                        activity.startPostponedEnterTransition();
+                        return true;
                     }
                 });
     }

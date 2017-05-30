@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
@@ -36,6 +37,8 @@ public class BeerDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        getWindow().setEnterTransition(new Explode());
+        getWindow().setExitTransition(new Explode());
         setContentView(R.layout.activity_beer_details);
         final ActionBar ab =getSupportActionBar();
         ab.hide();
@@ -53,6 +56,8 @@ public class BeerDetails extends AppCompatActivity {
 
         intentExtra = getIntent();
         this.beer = (Beer) intentExtra.getSerializableExtra(Constants.SHARE_BEERS);
+
+        //image.setTransitionName("beerDetail");
 
         collapsing_container.setTitle(beer.getName());
         tag.setText(beer.getTag());

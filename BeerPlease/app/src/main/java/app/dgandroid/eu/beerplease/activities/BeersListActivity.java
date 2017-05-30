@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Explode;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -34,9 +35,9 @@ public class BeersListActivity extends AppCompatActivity implements ActionDelega
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beers_list);
-
         ActionBar ab =getSupportActionBar();
         ab.setElevation(0);
+        getWindow().setExitTransition(new Explode());
 
         recyclerView    = (RecyclerView) findViewById(R.id.beerListView);
         refreshBTN      = (ImageButton) findViewById(R.id.refreshBTN);
@@ -72,7 +73,7 @@ public class BeersListActivity extends AppCompatActivity implements ActionDelega
         }
         Logger.i("beers = " + beers.size());
         recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
-        adapter = new BeerAdapter(beers, R.layout.beer_item, getApplicationContext());
+        adapter = new BeerAdapter(beers, R.layout.beer_item, this);
         recyclerView.setAdapter(adapter);
         recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         adapter.notifyDataSetChanged();
