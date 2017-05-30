@@ -19,6 +19,7 @@ public class ProgressLoading {
 
     public void onShow(){
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
