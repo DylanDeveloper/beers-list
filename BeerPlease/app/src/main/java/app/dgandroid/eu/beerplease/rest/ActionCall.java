@@ -29,10 +29,9 @@ public class ActionCall {
 
     public void execute() {
         loading.onShow();
-        Client client = new Client();
         page = Manager.getInstance().getPage();
-        ApiInterface apiInterface = client.getClient().create(ApiInterface.class);
-        call = apiInterface.getBeers(page, Config.PER_PAGE);
+        BeerActionInterface beerActionInterface = Client.getClient().create(BeerActionInterface.class);
+        call = beerActionInterface.getBeers(page, Config.PER_PAGE);
         call.enqueue(new Callback<List<Beer>>() {
             @Override
             public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {

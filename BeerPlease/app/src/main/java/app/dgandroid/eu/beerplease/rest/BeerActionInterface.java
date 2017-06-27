@@ -10,7 +10,7 @@ import retrofit2.http.Query;
  * Created by Duilio on 22/05/2017.
  */
 
-public interface ApiInterface {
+public interface BeerActionInterface {
     @GET("beers?")
     Call<List<Beer>> getBeers(@Query("page") int page, @Query("per_page") int per_page);
 }

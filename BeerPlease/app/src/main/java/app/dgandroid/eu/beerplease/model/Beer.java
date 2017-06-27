@@ -8,8 +8,6 @@ import java.io.Serializable;
  */
 
 public class Beer implements Serializable {
-    //icon, name and tags.
-    //The beer description screen includes: name, tags, description, image, contributor's name and date of brew, ingredients.
     @SerializedName("id")
     private int id;
     @SerializedName("name")
