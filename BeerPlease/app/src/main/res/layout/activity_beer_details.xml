@@ -64,12 +64,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:id="@+id/layoutInfo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -158,13 +159,14 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/listLayoutContainer"
+            <app.dgandroid.eu.beerplease.customs.NonScrollExpandableListView
+                android:id="@+id/expListView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"></app.dgandroid.eu.beerplease.customs.NonScrollExpandableListView>
+
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton

@@ -8,7 +8,7 @@
     tools:context="app.dgandroid.eu.beerplease.activities.FullscreenBeerActivity">
 
     <app.dgandroid.eu.beerplease.customs.TouchImageView
-        android:id="@+id/imageView"
+        android:id="@+id/touchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/default_beer" />
