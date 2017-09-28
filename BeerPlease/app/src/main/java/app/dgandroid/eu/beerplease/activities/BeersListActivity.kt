@@ -28,30 +28,29 @@ class BeersListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_beers_list)
         window.exitTransition = Explode()
 
-        beerListView!!.layoutManager = LinearLayoutManager(this)
+        beerListView.layoutManager = LinearLayoutManager(this)
 
         actionCall = ActionCall(this, object : ActionCall.ActionDelegate {
             override fun onSuccess(response: Response<MutableList<Beer>>) {
-                if (beers == null) {
-                    beers = response.body()
-                } else {
-                    beers!!.addAll(response.body())
+                when (beers) {
+                    null -> beers = response.body()
+                    else -> beers!!.addAll(response.body())
                 }
-                recyclerViewState = beerListView!!.layoutManager.onSaveInstanceState()
+                recyclerViewState = beerListView.layoutManager.onSaveInstanceState()
                 adapter = BeerAdapter(beers!!, this@BeersListActivity)
-                beerListView!!.adapter = adapter
-                beerListView!!.layoutManager.onRestoreInstanceState(recyclerViewState)
+                beerListView.adapter = adapter
+                beerListView.layoutManager.onRestoreInstanceState(recyclerViewState)
                 adapter!!.notifyDataSetChanged()
             }
 
             override fun onFailure(t: Any) {
                 Toast.makeText(this@BeersListActivity, t.toString(), Toast.LENGTH_LONG).show()
-                refreshBTN!!.visibility = View.VISIBLE
+                refreshBTN.visibility = View.VISIBLE
             }
         })
         actionCall!!.execute()
 
-        beerListView!!.addOnScrollListener(object : OnVerticalScrollWithPagingSlopListener(this) {
+        beerListView.addOnScrollListener(object : OnVerticalScrollWithPagingSlopListener(this) {
             override fun onScrolledToBottom() {
                 super.onScrolledToBottom()
                 actionCall!!.execute()
@@ -59,17 +58,15 @@ class BeersListActivity : AppCompatActivity() {
         })
 
         refreshBTN!!.setOnClickListener {
-            refreshBTN!!.visibility = View.GONE
+            refreshBTN.visibility = View.GONE
             actionCall!!.execute()
         }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (beers != null) {
-            beers!!.clear()
-            Manager.clear()
-        }
+        beers!!.clear()
+        Manager.clear()
         finish()
     }
 }

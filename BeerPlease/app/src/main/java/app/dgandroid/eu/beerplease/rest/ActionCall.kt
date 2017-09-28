@@ -16,19 +16,15 @@ import retrofit2.Response
 class ActionCall(var context: Context, var delegate: ActionDelegate) {
 
     private var page: Int = 0
-    private val loading: ProgressLoading
+    private val loading: ProgressLoading = ProgressLoading(context)
     private var call: Call<MutableList<Beer>>? = null
-
-    init {
-        loading = ProgressLoading(context)
-    }
 
     fun execute() {
         loading.onShow()
         page = Manager.page
-        val beerActionInterface = Client.client!!.create(BeerActionInterface::class.java)
-        call = beerActionInterface.getBeers(page, Config.PER_PAGE)
-        call!!.enqueue(object : Callback<MutableList<Beer>> {
+        val beerActionInterface = Client.client?.create(BeerActionInterface::class.java)
+        call = beerActionInterface?.getBeers(page, Config.PER_PAGE)
+        call?.enqueue(object : Callback<MutableList<Beer>> {
             override fun onResponse(call: Call<MutableList<Beer>>, response: Response<MutableList<Beer>>) {
                 val statusCode = response.code()
                 if (statusCode == 200) {

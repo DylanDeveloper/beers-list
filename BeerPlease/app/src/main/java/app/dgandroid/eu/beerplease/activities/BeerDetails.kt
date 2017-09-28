@@ -19,7 +19,7 @@ class BeerDetails : AppCompatActivity() {
     private var ingredientAdapter : IngredientsAdapter? = null
     private var listDataHeader: List<String>?           = null
     private var beer: Beer?                             = null
-    val mListDataChild = HashMap<String, List<Ingredients.IngredientType>>()
+    private val mListDataChild = HashMap<String, List<Ingredients.IngredientType>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,31 +27,31 @@ class BeerDetails : AppCompatActivity() {
         window.enterTransition  = Explode()
         window.exitTransition   = Explode()
         setContentView(R.layout.activity_beer_details)
-        supportActionBar!!.hide()
-        this.beer = intent!!.getSerializableExtra(Constants.SHARE_BEERS) as Beer
+        supportActionBar?.hide()
+        beer = intent.getSerializableExtra(Constants.SHARE_BEERS) as Beer
 
         collapsing_container.title  = beer!!.name
-        tag!!.text                  = beer!!.tag
-        description!!.text          = beer!!.description
-        contributorsName!!.text     = beer!!.contributorsName
-        dateOfBrew!!.text           = beer!!.dateOfBrew
+        tag.text                    = beer!!.tag
+        description.text            = beer!!.description
+        contributorsName.text       = beer!!.contributorsName
+        dateOfBrew.text             = beer!!.dateOfBrew
 
         Utility.onGettingImage(this, beer!!.image, imgBeer)
 
         if (beer!!.ingredients!!.malt!!.size != 0) {
-            mListDataChild!!.put("Malts", beer!!.ingredients!!.malt!!)
+            mListDataChild.put("Malts", beer!!.ingredients!!.malt!!)
         }
         if (beer!!.ingredients!!.hops!!.size != 0) {
-            mListDataChild!!.put("Hops", beer!!.ingredients!!.hops!!)
+            mListDataChild.put("Hops", beer!!.ingredients!!.hops!!)
         }
 
-        listDataHeader      = ArrayList<String>(mListDataChild!!.keys)
+        listDataHeader      = ArrayList<String>(mListDataChild.keys)
         ingredientAdapter   = IngredientsAdapter(this, listDataHeader!!, mListDataChild)
         expListView.setAdapter(ingredientAdapter)
         expListView.setGroupIndicator(null)
 
-        backButton!!.setOnClickListener { finish() }
-        fabImage!!.setOnClickListener {
+        backButton.setOnClickListener {finish()}
+        fabImage.setOnClickListener {
             val intent = Intent(this@BeerDetails, FullscreenBeerActivity::class.java)
             intent.putExtra(Constants.SHARE_IMAGE, beer!!.image)
             startActivity(intent)

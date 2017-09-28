@@ -46,33 +46,26 @@ class IngredientsAdapter(private val mContext: Context, private val mListDataHea
     }
 
     override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup): View {
-        val view: View?
-        val headerTitle = getGroup(groupPosition) as String
-        if (convertView == null) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.header_ingredients, parent, false)
-        }else {
-            view = convertView
+        val view: View? = when (convertView) {
+            null -> LayoutInflater.from(mContext).inflate(R.layout.header_ingredients, parent, false)
+            else -> convertView
         }
-        view!!.ingredientHeader.text = headerTitle + ":"
-        if(headerTitle == "Malts") {
-            view!!.imageIngredient.setImageResource(R.drawable.malts)
-        } else {
-            view!!.imageIngredient.setImageResource(R.drawable.hops)
+        val headerTitle : String = getGroup(groupPosition) as String
+        when (headerTitle) {
+            "Malts" -> view?.imageIngredient!!.setImageResource(R.drawable.malts)
+            "Hops" -> view?.imageIngredient!!.setImageResource(R.drawable.hops)
         }
-        //val exp : ExpandableListView = parent as ExpandableListView
-        //exp.expandGroup(groupPosition)
+        view?.ingredientHeader?.text = "$headerTitle :"
         return view!!
     }
 
     override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
-        val view: View?
-        val ingredientType = getChild(groupPosition, childPosition) as Ingredients.IngredientType
-        if (convertView == null) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_ingredient, parent, false)
-        } else {
-            view = convertView
+        val view: View? = when (convertView) {
+            null -> LayoutInflater.from(mContext).inflate(R.layout.item_ingredient, parent, false)
+            else -> convertView
         }
-        val text = ingredientType.name + ": " + ingredientType.amount!!.value + " " + ingredientType.amount!!.unit
+        val ingredientType = getChild(groupPosition, childPosition) as Ingredients.IngredientType
+        val text = "${ingredientType.name} : ${ingredientType.amount?.value} ${ingredientType.amount?.unit}"
         view!!.itemIngredient.text = text
         return view!!
     }

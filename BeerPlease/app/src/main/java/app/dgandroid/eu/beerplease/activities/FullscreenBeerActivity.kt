@@ -12,12 +12,12 @@ class FullscreenBeerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.enterTransition = Explode()
-        window.exitTransition = Explode()
+        window.enterTransition  = Explode()
+        window.exitTransition   = Explode()
         setContentView(R.layout.activity_fullscreenbeer)
-        supportActionBar!!.hide()
-        val urlImage = intent!!.getStringExtra(Constants.SHARE_IMAGE)
+        supportActionBar?.hide()
+        val urlImage = intent.getStringExtra(Constants.SHARE_IMAGE)
         Utility.onGettingImage(this, urlImage, touchView)
-        closeBTN!!.setOnClickListener { finish() }
+        closeBTN.setOnClickListener { finish() }
     }
 }
