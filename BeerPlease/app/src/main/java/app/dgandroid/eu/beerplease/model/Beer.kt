@@ -23,5 +23,5 @@ class Beer : Serializable {
     @SerializedName("first_brewed")
     val dateOfBrew: String = ""
     @SerializedName("ingredients")
-    val ingredients: Ingredients? = null
+    val ingredients = Ingredients()
 }

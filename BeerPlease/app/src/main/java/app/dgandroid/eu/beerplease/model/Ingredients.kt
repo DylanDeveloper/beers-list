@@ -10,15 +10,15 @@ import java.util.ArrayList
 
 class Ingredients : Serializable {
     @SerializedName("malt")
-    val malt: ArrayList<IngredientType>? = null
+    val malt = arrayListOf<IngredientType>()
     @SerializedName("hops")
-    val hops: ArrayList<IngredientType>? = null
+    val hops = arrayListOf<IngredientType>()
 
     inner class IngredientType : Serializable {
         @SerializedName("name")
         val name: String = ""
         @SerializedName("amount")
-        val amount: Amount? = null
+        val amount = Amount()
 
         inner class Amount : Serializable {
             @SerializedName("value")

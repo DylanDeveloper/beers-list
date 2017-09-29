@@ -65,7 +65,7 @@ class IngredientsAdapter(private val mContext: Context, private val mListDataHea
             else -> convertView
         }
         val ingredientType = getChild(groupPosition, childPosition) as Ingredients.IngredientType
-        val text = "${ingredientType.name} : ${ingredientType.amount?.value} ${ingredientType.amount?.unit}"
+        val text = "${ingredientType.name} : ${ingredientType.amount.value} ${ingredientType.amount.unit}"
         view!!.itemIngredient.text = text
         return view!!
     }

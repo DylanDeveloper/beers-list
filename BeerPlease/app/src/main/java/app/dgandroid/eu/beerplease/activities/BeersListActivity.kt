@@ -2,26 +2,22 @@ package app.dgandroid.eu.beerplease.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.v7.widget.LinearLayoutManager
 import android.transition.Explode
 import android.view.View
-import android.widget.Toast
 import app.dgandroid.eu.beerplease.adapters.BeerAdapter
-import app.dgandroid.eu.beerplease.controllers.Manager
 import app.dgandroid.eu.beerplease.customs.OnVerticalScrollWithPagingSlopListener
 import app.dgandroid.eu.beerplease.model.Beer
 import app.dgandroid.eu.beerplease.R
 import app.dgandroid.eu.beerplease.rest.ActionCall
 import retrofit2.Response
 import kotlinx.android.synthetic.main.activity_beers_list.*
+import org.jetbrains.anko.longToast
 
 class BeersListActivity : AppCompatActivity() {
 
-    private var beers: MutableList<Beer>?       = null
+    private var beers = mutableListOf<Beer>()
     private var adapter: BeerAdapter?           = null
-    private var actionCall: ActionCall?         = null
-    private var recyclerViewState: Parcelable?  = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,43 +26,35 @@ class BeersListActivity : AppCompatActivity() {
 
         beerListView.layoutManager = LinearLayoutManager(this)
 
-        actionCall = ActionCall(this, object : ActionCall.ActionDelegate {
+        val actionCall = ActionCall(this, object : ActionCall.ActionDelegate {
             override fun onSuccess(response: Response<MutableList<Beer>>) {
                 when (beers) {
                     null -> beers = response.body()
-                    else -> beers!!.addAll(response.body())
+                    else -> beers.addAll(response.body())
                 }
-                recyclerViewState = beerListView.layoutManager.onSaveInstanceState()
-                adapter = BeerAdapter(beers!!, this@BeersListActivity)
+                val recyclerViewState = beerListView.layoutManager.onSaveInstanceState()
+                adapter = BeerAdapter(beers, this@BeersListActivity)
                 beerListView.adapter = adapter
                 beerListView.layoutManager.onRestoreInstanceState(recyclerViewState)
                 adapter!!.notifyDataSetChanged()
             }
 
             override fun onFailure(t: Any) {
-                Toast.makeText(this@BeersListActivity, t.toString(), Toast.LENGTH_LONG).show()
+                longToast(t.toString())
                 refreshBTN.visibility = View.VISIBLE
             }
         })
-        actionCall!!.execute()
+        actionCall.execute()
 
         beerListView.addOnScrollListener(object : OnVerticalScrollWithPagingSlopListener(this) {
             override fun onScrolledToBottom() {
-                super.onScrolledToBottom()
-                actionCall!!.execute()
+                actionCall.execute()
             }
         })
 
-        refreshBTN!!.setOnClickListener {
+        refreshBTN.setOnClickListener {
             refreshBTN.visibility = View.GONE
-            actionCall!!.execute()
+            actionCall.execute()
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        beers!!.clear()
-        Manager.clear()
-        finish()
     }
 }

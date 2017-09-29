@@ -17,13 +17,12 @@ class ActionCall(var context: Context, var delegate: ActionDelegate) {
 
     private var page: Int = 0
     private val loading: ProgressLoading = ProgressLoading(context)
-    private var call: Call<MutableList<Beer>>? = null
 
     fun execute() {
         loading.onShow()
         page = Manager.page
-        val beerActionInterface = Client.client?.create(BeerActionInterface::class.java)
-        call = beerActionInterface?.getBeers(page, Config.PER_PAGE)
+        var beerActionInterface = Client.client?.create(BeerActionInterface::class.java)
+        val call = beerActionInterface?.getBeers(page, Config.PER_PAGE)
         call?.enqueue(object : Callback<MutableList<Beer>> {
             override fun onResponse(call: Call<MutableList<Beer>>, response: Response<MutableList<Beer>>) {
                 val statusCode = response.code()
