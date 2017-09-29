@@ -39,7 +39,7 @@ class BeerAdapter(private val beerList: MutableList<Beer>, private val activity:
             itemView.tagBeer.text   = beer.name
             itemView.nameBeer.text  = beer.name
             Utility.setIconFromURL(beer.image, itemView.beerImage, activity)
-            itemView.beerImage.transitionName =  activity.getString(R.string.transition_string) + beer.id
+            itemView.beerImage.transitionName =  "${activity.getString(R.string.transition_string)} ${beer.id}"
             itemView.setOnClickListener {
                 val intent = Intent(activity, BeerDetails::class.java)
                 intent.putExtra(Constants.SHARE_BEERS, beer)

@@ -10,14 +10,10 @@ import android.view.ViewConfiguration
 
 abstract class OnVerticalScrollWithPagingSlopListener(context: Context) : OnVerticalScrollListener() {
 
-    private val mPagingTouchSlop: Int
+    private val mPagingTouchSlop: Int = ViewConfiguration.get(context).scaledPagingTouchSlop
 
     // Distance in y since last idle or direction change.
     private var mDy: Int = 0
-
-    init {
-        mPagingTouchSlop = ViewConfiguration.get(context).scaledPagingTouchSlop
-    }
 
     override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {

@@ -45,29 +45,29 @@ class IngredientsAdapter(private val mContext: Context, private val mListDataHea
         return false
     }
 
-    override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup): View {
+    override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup): View? {
         val view: View? = when (convertView) {
             null -> LayoutInflater.from(mContext).inflate(R.layout.header_ingredients, parent, false)
             else -> convertView
         }
         val headerTitle : String = getGroup(groupPosition) as String
         when (headerTitle) {
-            "Malts" -> view?.imageIngredient!!.setImageResource(R.drawable.malts)
-            "Hops" -> view?.imageIngredient!!.setImageResource(R.drawable.hops)
+            "Malts" -> view?.imageIngredient?.setImageResource(R.drawable.malts)
+            "Hops" -> view?.imageIngredient?.setImageResource(R.drawable.hops)
         }
         view?.ingredientHeader?.text = "$headerTitle :"
-        return view!!
+        return view
     }
 
-    override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
+    override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup): View? {
         val view: View? = when (convertView) {
             null -> LayoutInflater.from(mContext).inflate(R.layout.item_ingredient, parent, false)
             else -> convertView
         }
         val ingredientType = getChild(groupPosition, childPosition) as Ingredients.IngredientType
         val text = "${ingredientType.name} : ${ingredientType.amount.value} ${ingredientType.amount.unit}"
-        view!!.itemIngredient.text = text
-        return view!!
+        view?.itemIngredient?.text = text
+        return view
     }
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {

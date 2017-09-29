@@ -13,7 +13,7 @@ class Beer : Serializable {
     @SerializedName("name")
     val name: String = ""
     @SerializedName("tagline")
-    val tag: String? = null
+    val tag: String  = ""
     @SerializedName("description")
     val description: String = ""
     @SerializedName("image_url")

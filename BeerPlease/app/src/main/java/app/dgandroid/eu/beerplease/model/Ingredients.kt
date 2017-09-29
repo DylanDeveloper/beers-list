@@ -2,7 +2,6 @@ package app.dgandroid.eu.beerplease.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-import java.util.ArrayList
 
 /**
  * Created by Duilio on 22/05/2017.

@@ -9,6 +9,7 @@ import app.dgandroid.eu.beerplease.adapters.BeerAdapter
 import app.dgandroid.eu.beerplease.customs.OnVerticalScrollWithPagingSlopListener
 import app.dgandroid.eu.beerplease.model.Beer
 import app.dgandroid.eu.beerplease.R
+import app.dgandroid.eu.beerplease.controllers.Manager
 import app.dgandroid.eu.beerplease.rest.ActionCall
 import retrofit2.Response
 import kotlinx.android.synthetic.main.activity_beers_list.*
@@ -56,5 +57,11 @@ class BeersListActivity : AppCompatActivity() {
             refreshBTN.visibility = View.GONE
             actionCall.execute()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Manager.clear()
+        beers.clear()
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.ImageView
+import app.dgandroid.eu.beerplease.R
 import com.squareup.picasso.Callback
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -20,11 +21,9 @@ object Utility {
                 .into(imageView, object : Callback {
                     override fun onSuccess() {}
                     override fun onError() { //Try again online if cache failed
-                        val resourceId = context.resources.getIdentifier("default_beer", "drawable", context.packageName)
-                        val drawable = context.resources.getDrawable(resourceId)
                         Picasso.with(context)
                                 .load(imageUrl)
-                                .error(drawable)
+                                .error(R.drawable.default_beer)
                                 .into(imageView, object : Callback {
                                     override fun onSuccess() {}
                                     override fun onError() {
