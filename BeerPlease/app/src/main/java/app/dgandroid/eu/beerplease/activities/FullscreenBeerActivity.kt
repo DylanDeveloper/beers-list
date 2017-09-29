@@ -18,6 +18,6 @@ class FullscreenBeerActivity : AppCompatActivity() {
         supportActionBar?.hide()
         val urlImage = intent.getStringExtra(Constants.SHARE_IMAGE)
         Utility.onGettingImage(this, urlImage, touchView)
-        closeBTN.setOnClickListener { finish() }
+        closeBTN.setOnClickListener {onBackPressed()}
     }
 }

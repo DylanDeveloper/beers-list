@@ -12,12 +12,11 @@ import app.dgandroid.eu.beerplease.model.Ingredients
 import app.dgandroid.eu.beerplease.utils.Constants
 import app.dgandroid.eu.beerplease.utils.Utility
 import kotlinx.android.synthetic.main.activity_beer_details.*
-import java.util.HashMap
 
 class BeerDetails : AppCompatActivity() {
 
     private var beer            = Beer()
-    private val mListDataChild  = HashMap<String, List<Ingredients.IngredientType>>()
+    private val mListDataChild  = hashMapOf<String, List<Ingredients.IngredientType>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +47,7 @@ class BeerDetails : AppCompatActivity() {
         expListView.setAdapter(ingredientAdapter)
         expListView.setGroupIndicator(null)
 
-        backButton.setOnClickListener {finish()}
+        backButton.setOnClickListener {onBackPressed()}
         fabImage.setOnClickListener {
             val intent = Intent(this@BeerDetails, FullscreenBeerActivity::class.java)
             intent.putExtra(Constants.SHARE_IMAGE, beer.image)
